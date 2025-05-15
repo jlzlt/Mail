@@ -33,6 +33,19 @@ function load_mailbox(mailbox) {
 
   // Show the mailbox name
   document.querySelector('#emails-view').innerHTML = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
+
+  // Get email from selected mailbox
+  fetch(`/emails/${mailbox}`)
+  .then(response => response.json())
+  .then(result => {
+    if (result.error) {
+      alert(result.error);
+    } else {
+      console.log(result);
+      populate_emails(result);
+    }
+    
+  });
 }
 
 function send_email(event) {
@@ -62,4 +75,17 @@ function send_email(event) {
     console.error('Fetch error:', error);
     alert('A network error occurred.');
   });
+}
+
+function populate_emails(emails) {
+  let emails_div = document.querySelector('#emails-view')
+  for (let i = 0; i < emails.length; i++) {
+    let container = document.createElement('div');
+    container.className = 'email-box'
+    let sender_email = document.createElement('span')
+    sender_email.className = 'sender-email'
+    sender_email.innerHTML = emails[i].sender
+    container.append(sender_email)
+    emails_div.append(container)
+  }
 }
