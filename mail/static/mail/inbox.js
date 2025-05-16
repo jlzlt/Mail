@@ -22,7 +22,7 @@ function compose_email() {
   document.querySelector('#compose-body').value = '';
 
   // Listen for when user sends email
-  document.querySelector('#compose-form').addEventListener('submit', event => send_email(event));
+  document.querySelector('#compose-form').addEventListener('submit', event => sendEmail(event));
 }
 
 function load_mailbox(mailbox) {
@@ -48,12 +48,12 @@ function load_mailbox(mailbox) {
   });
 }
 
-function send_email(event) {
+function sendEmail(event) {
   event.preventDefault();
 
-  let recipients = document.querySelector('#compose-recipients').value;
-  let subject = document.querySelector('#compose-subject').value;
-  let body = document.querySelector('#compose-body').value;
+  const recipients = document.querySelector('#compose-recipients').value;
+  const subject = document.querySelector('#compose-subject').value;
+  const body = document.querySelector('#compose-body').value;
 
   fetch('/emails', {
     method: 'POST',
@@ -78,14 +78,36 @@ function send_email(event) {
 }
 
 function populate_emails(emails) {
-  let emails_div = document.querySelector('#emails-view')
-  for (let i = 0; i < emails.length; i++) {
+  const emails_div = document.querySelector('#emails-view');
+
+  const fragment = document.createDocumentFragment();
+
+  emails.forEach(email => {
     let container = document.createElement('div');
-    container.className = 'email-box'
-    let sender_email = document.createElement('span')
-    sender_email.className = 'sender-email'
-    sender_email.innerHTML = emails[i].sender
-    container.append(sender_email)
-    emails_div.append(container)
-  }
+    container.className = 'email-box';
+
+    let senderEmail = document.createElement('span');
+    senderEmail.className = 'sender-email';
+    senderEmail.textContent = email.sender;
+
+    let titleEmail = document.createElement('span');
+    titleEmail.className = 'title-email';
+    titleEmail.textContent = email.subject;
+
+    let dateEmail = document.createElement('span');
+    dateEmail.className = 'date-email';
+    dateEmail.textContent = email.timestamp;
+
+    if (email.read === true) {
+      container.style.backgroundColor = '#F0F0F0';
+      senderEmail.style.fontWeight = 'normal';
+    }
+
+    container.append(senderEmail);
+    container.append(titleEmail);
+    container.append(dateEmail);
+    fragment.append(container);
+  });
+
+  emails_div.append(fragment);
 }

@@ -3,10 +3,25 @@ textarea {
 }
 
 .email-box {
+    display: grid;
+    grid-template-columns: auto auto 1fr;
     border-style: solid;
     border-color: rgb(200, 200, 200);
     border-width: 1px;
     padding: 0.5rem;
     margin: 0.25rem;
     font-size: 1rem;
+}
+
+.sender-email {
+    font-weight: bold;    
+}
+
+.title-email {
+    padding-left: 1rem;
+}
+
+.date-email {
+    text-align: right;
+    color:rgb(129, 127, 127);
 }
