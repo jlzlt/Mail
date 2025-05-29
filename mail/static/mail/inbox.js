@@ -124,7 +124,7 @@ function load_email(email_id) {
   .then(response => response.json())
   .then(email => {
     if (email.error) {
-      alert(result.error);
+      alert(email.error);
     } else {
       console.log(email);
       mark_read(email.id);
@@ -223,7 +223,7 @@ function toggle_props(email_id, prop) {
   .then(response => response.json())
   .then(email => {
     if (email.error) {
-      alert(result.error);
+      alert(email.error);
     } else {
       if (email[prop] === true) {
         fetch(`/emails/${email.id}`, {
