@@ -189,10 +189,18 @@ function open_email(email) {
   replyBtn.textContent = 'Reply';
   replyBtn.addEventListener('click', () => reply_email(email));
 
-  const archiveBtn  = document.createElement('button');
-  archiveBtn.className = 'btn btn-sm btn-outline-primary ml-1 archive-btn';
-  archiveBtn.textContent = email.archived ? 'Unarchive' : 'Archive';    
-  archiveBtn.addEventListener('click', () => toggle_props(email.id, 'archived'));
+  console.log('Current user email:', CURR_EMAIL);
+  console.log('Email sender:', email.sender);
+  console.log('Are they different?', email.sender !== CURR_EMAIL);
+
+  let archiveBtn;
+  if (email.sender !== CURR_EMAIL) {
+    console.log("Adding button")
+    archiveBtn  = document.createElement('button');
+    archiveBtn.className = 'btn btn-sm btn-outline-primary ml-1 archive-btn';
+    archiveBtn.textContent = email.archived ? 'Unarchive' : 'Archive';    
+    archiveBtn.addEventListener('click', () => toggle_props(email.id, 'archived'));
+  }
 
   const readBtn = document.createElement('button');
   readBtn.className = 'btn btn-sm btn-outline-primary ml-1 read-btn';
@@ -209,7 +217,12 @@ function open_email(email) {
   fragment.append(subject);
   fragment.append(timestamp);
   fragment.append(replyBtn);
-  fragment.append(archiveBtn);
+  if (archiveBtn) {
+    console.log('Appending archive button to fragment');
+    fragment.append(archiveBtn);
+  } else {
+    console.log('archiveBtn is null/undefined, not appending');
+  } 
   fragment.append(readBtn);
   fragment.append(separator);
   fragment.append(body);
