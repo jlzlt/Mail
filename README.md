@@ -30,7 +30,7 @@ Make sure you have the following installed:
 ### 2.) Clone the Repository
 Open a terminal and run:  
 
-`git clone https://github.com/jlzlt/mail.git`  
+`git clone https://github.com/jlzlt/Mail.git`  
 `cd Mail`
 
 ### 3.) Install Dependencies
