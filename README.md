@@ -37,11 +37,15 @@ Open a terminal and run:
 
 `pip install django`
 
-### 4.) Run the server
+### 4.) Run migrations
+
+`python manage.py migrate`
+
+### 5.) Run the server
 
 `python manage.py runserver`
 
-### 5.) Open in browser
+### 6.) Open in browser
 
 Go to `http://127.0.0.1:8000/` and log in or register to start using Mail.
 
